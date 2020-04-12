@@ -13,9 +13,9 @@
 
 ## Sobre o curso
 
-### Curso de JavaScript, ReactJS e React Native.
+Curso de JavaScript, ReactJS e React Native.
 
-### Aprender as tecnologias para back-end, front-end e mobile com apenas uma linguagem.
+Aprender a desenvolver o back-end, front-end e mobile utilizando apenas uma linguagem.
 
 ## Tecnologias
 
