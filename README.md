@@ -7,7 +7,7 @@
 
 ### Curso de JavaScript, ReactJS e React Native.
 
-### Aprender as stacks back-end, front-end e mobile com apenas uma linguagem.
+### Aprender as tecnologias para back-end, front-end e mobile com apenas uma linguagem.
 
 <br>
 
