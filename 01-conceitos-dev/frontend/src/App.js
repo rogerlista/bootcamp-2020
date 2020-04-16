@@ -12,7 +12,7 @@ export default function App() {
     api.get('/projects').then((response) => {
       setProjects(response.data)
     })
-  })
+  }, [])
 
   async function handleAddProject() {
     const response = await api.post('/projects', {
