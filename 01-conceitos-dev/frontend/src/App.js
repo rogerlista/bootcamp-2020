@@ -1,5 +1,8 @@
 import React, { useState } from 'react'
+
+import './App.js'
 import Header from './components/Header'
+import backgroundImage from './assets/background.jpg'
 
 export default function App() {
   const [projects, setProjects] = useState(['Desenvolvimento de app', 'Front-end web'])
@@ -12,6 +15,8 @@ export default function App() {
   return (
     <>
       <Header title="Homepage" />
+
+      <img src={backgroundImage} width={300} />
 
       <ul>
         <ul>
