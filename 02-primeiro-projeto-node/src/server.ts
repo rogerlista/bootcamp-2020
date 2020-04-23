@@ -1,4 +1,4 @@
-import 'reflect_metadata'
+import 'reflect-metadata'
 
 import express from 'express'
 
