@@ -4,6 +4,9 @@
 .LSOverride
 .vscode
 
+tmp/*
+!tmp/.gitkeep
+
 # Logs
 logs
 *.log
