@@ -23,6 +23,8 @@ export const Form = styled.form`
     border: 0;
     border-radius: 5px 0 0 5px;
     color: #3a3a3a;
+    border: 2px solid #fff;
+    border-right: 0;
 
     &::placeholder {
       color: #a8a8b3;
@@ -43,6 +45,12 @@ export const Form = styled.form`
       background: ${shade(0.2, '#04d361')};
     }
   }
+`
+
+export const Error = styled.span`
+  display: block;
+  color: #c53030;
+  margin-top: 8px;
 `
 
 export const Repositories = styled.div`
