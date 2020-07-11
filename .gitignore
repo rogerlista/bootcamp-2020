@@ -1,11 +1,16 @@
 # General
 .DS_Store
+.idea
 .AppleDouble
 .LSOverride
 .vscode
 
+# Folder temp
 tmp/*
 !tmp/.gitkeep
+
+# Typeorm database manager
+ormconfig.json
 
 # Logs
 logs
