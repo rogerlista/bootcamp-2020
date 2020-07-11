@@ -1,16 +1,16 @@
 import { Router } from 'express'
 import multer from 'multer'
-import { container } from 'tsyringe'
 import { celebrate, Segments, Joi } from 'celebrate'
 
 import uploadConfig from '@config/upload'
 
 import UsersController from '../controllers/UsersController'
-import UpdateUserAvatarService from '@modules/users/services/UpdateUserAvatarService'
+import UserAvatarController from '../controllers/UserAvatarController'
 import ensureAuthenticated from '../middlewares/ensureAuthenticated'
 
 const usersRouter = Router()
 const usersController = new UsersController()
+const userAvatarController = new UserAvatarController()
 const upload = multer(uploadConfig)
 
 usersRouter.post(
@@ -29,18 +29,7 @@ usersRouter.patch(
   '/avatar',
   ensureAuthenticated,
   upload.single('avatar'),
-  async (request, response) => {
-    const updateUserAvatar = container.resolve(UpdateUserAvatarService)
-
-    const user = await updateUserAvatar.execute({
-      user_id: request.user.id,
-      avatarFilename: request.file.filename,
-    })
-
-    delete user.password
-
-    return response.json(user)
-  },
+  userAvatarController.update,
 )
 
 export default usersRouter
