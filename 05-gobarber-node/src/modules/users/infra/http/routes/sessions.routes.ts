@@ -1,23 +1,20 @@
 import { Router } from 'express'
-import { container } from 'tsyringe'
+import { celebrate, Segments, Joi } from 'celebrate'
 
-import AuthenticateUserService from '@modules/users/services/AuthenticateUserServices'
+import SessionController from '../controllers/SessionController'
 
 const sessionsRouter = Router()
+const sessionController = new SessionController()
 
-sessionsRouter.post('/', async (request, response) => {
-  const { email, password } = request.body
-
-  const authenticateUser = container.resolve(AuthenticateUserService)
-
-  const { user, token } = await authenticateUser.execute({
-    email,
-    password,
-  })
-
-  delete user.password
-
-  return response.json({ user, token })
-})
+sessionsRouter.post(
+  '/',
+  celebrate({
+    [Segments.BODY]: {
+      email: Joi.string().email().required(),
+      password: Joi.string().required(),
+    },
+  }),
+  sessionController.create,
+)
 
 export default sessionsRouter
