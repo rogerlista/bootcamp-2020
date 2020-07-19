@@ -14,6 +14,8 @@ import {
   Content,
   Schedule,
   NextAppointment,
+  Section,
+  Appointment,
   Calendar,
 } from './styles'
 
@@ -80,7 +82,81 @@ const Dashboard: React.FC = () => {
               </span>
             </div>
           </NextAppointment>
+
+          <Section>
+            <strong>Manhã</strong>
+
+            <Appointment>
+              <span>
+                <FiClock />
+                8:00
+              </span>
+
+              <div>
+                <img
+                  src="https://avatars0.githubusercontent.com/u/300170?s=400&v=4"
+                  alt="Juca"
+                />
+
+                <strong>Juca</strong>
+              </div>
+            </Appointment>
+
+            <Appointment>
+              <span>
+                <FiClock />
+                9:00
+              </span>
+
+              <div>
+                <img
+                  src="https://avatars0.githubusercontent.com/u/300170?s=400&v=4"
+                  alt="Juca"
+                />
+
+                <strong>Juca</strong>
+              </div>
+            </Appointment>
+          </Section>
+
+          <Section>
+            <strong>Tarde</strong>
+
+            <Appointment>
+              <span>
+                <FiClock />
+                14:00
+              </span>
+
+              <div>
+                <img
+                  src="https://avatars0.githubusercontent.com/u/300170?s=400&v=4"
+                  alt="Juca"
+                />
+
+                <strong>Juca</strong>
+              </div>
+            </Appointment>
+
+            <Appointment>
+              <span>
+                <FiClock />
+                16:00
+              </span>
+
+              <div>
+                <img
+                  src="https://avatars0.githubusercontent.com/u/300170?s=400&v=4"
+                  alt="Juca"
+                />
+
+                <strong>Juca</strong>
+              </div>
+            </Appointment>
+          </Section>
         </Schedule>
+
+        <Calendar />
       </Content>
     </Container>
   )
