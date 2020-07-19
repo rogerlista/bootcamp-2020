@@ -28,6 +28,7 @@
     "react-hooks/exhaustive-deps": "warn",
     "react/prop-types": "off",
     "no-unused-expressions": "off",
+    "@typescript-eslint/camelcase": "off",
     "@typescript-eslint/explicit-function-return-type": [
       "error",
       {
