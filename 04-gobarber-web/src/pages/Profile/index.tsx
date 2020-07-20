@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from 'react'
+import React, { useRef, useCallback, ChangeEvent } from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { FiArrowLeft, FiCamera, FiUser, FiMail, FiLock } from 'react-icons/fi'
 import { FormHandles } from '@unform/core'
@@ -28,50 +28,73 @@ const Profile: React.FC = () => {
   const formRef = useRef<FormHandles>(null)
   const history = useHistory()
 
-  const { user } = useAuth()
+  const { user, updateUser } = useAuth()
   const { addToast } = useToast()
 
-  const handleSubmit = useCallback(async (data: ProfileFormData) => {
-    try {
-      formRef.current?.setErrors({})
+  const handleSubmit = useCallback(
+    async (data: ProfileFormData) => {
+      try {
+        formRef.current?.setErrors({})
 
-      const schema = Yup.object().shape({
-        name: Yup.string().required('Nome obrigatório'),
-        email: Yup.string()
-          .required('E-mail obrigatório')
-          .email('Digite um e-mail válido'),
-        password: Yup.string().min(6, 'No mínimo 6 dígitos'),
-      })
+        const schema = Yup.object().shape({
+          name: Yup.string().required('Nome obrigatório'),
+          email: Yup.string()
+            .required('E-mail obrigatório')
+            .email('Digite um e-mail válido'),
+          password: Yup.string().min(6, 'No mínimo 6 dígitos'),
+        })
 
-      await schema.validate(data, {
-        abortEarly: false,
-      })
+        await schema.validate(data, {
+          abortEarly: false,
+        })
 
-      await api.post('/users', data)
+        await api.post('/users', data)
 
-      history.push('/')
+        history.push('/')
 
-      addToast({
-        type: 'success',
-        title: 'Cadastro realizado',
-        description: 'Você já pode fazer seu logon',
-      })
-    } catch (err) {
-      if (err instanceof Yup.ValidationError) {
-        const errors = getValidationErrors(err)
+        addToast({
+          type: 'success',
+          title: 'Cadastro realizado',
+          description: 'Você já pode fazer seu logon',
+        })
+      } catch (err) {
+        if (err instanceof Yup.ValidationError) {
+          const errors = getValidationErrors(err)
 
-        formRef.current?.setErrors(errors)
+          formRef.current?.setErrors(errors)
 
-        return
+          return
+        }
+
+        addToast({
+          type: 'error',
+          title: 'Error no cadastro',
+          description: 'Ocorreu um erro ao fazer o cadastro, tente novamente.',
+        })
       }
+    },
+    [addToast, history],
+  )
 
-      addToast({
-        type: 'error',
-        title: 'Error no cadastro',
-        description: 'Ocorreu um erro ao fazer o cadastro, tente novamente.',
-      })
-    }
-  }, [])
+  const handleAvatarChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      if (e.target.files) {
+        const data = new FormData()
+
+        data.append('avatar', e.target.files[0])
+
+        api.patch('/users/avatar', data).then((response) => {
+          updateUser(response.data)
+
+          addToast({
+            type: 'success',
+            title: 'Avatar atualizado!',
+          })
+        })
+      }
+    },
+    [addToast, updateUser],
+  )
 
   return (
     <Container>
@@ -94,9 +117,11 @@ const Profile: React.FC = () => {
         >
           <AvatarInput>
             <img src={user.avatar_url} alt={user.name} />
-            <button type="button">
+            <label htmlFor="avatar">
               <FiCamera />
-            </button>
+
+              <input type="file" id="avatar" onChange={handleAvatarChange} />
+            </label>
           </AvatarInput>
 
           <h1>Meu perfil</h1>
