@@ -5,6 +5,7 @@ import api from '../services/api'
 interface User {
   id: string
   name: string
+  email: string
   avatar_url: string
 }
 interface AuthState {
@@ -31,6 +32,8 @@ const AuthProvider: React.FC = ({ children }) => {
     const user = localStorage.getItem('@GoBarber:user')
 
     if (token && user) {
+      api.defaults.headers.authorization = `Bearer ${token}`
+
       return { token, user: JSON.parse(user) }
     }
 
@@ -47,6 +50,8 @@ const AuthProvider: React.FC = ({ children }) => {
 
     localStorage.setItem('@GoBarber:token', token)
     localStorage.setItem('@GoBarber:user', JSON.stringify(user))
+
+    api.defaults.headers.authorization = `Bearer ${token}`
 
     setData({ token, user })
   }, [])
